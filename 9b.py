@@ -1,0 +1,23 @@
+from sqlite3 import *
+open('hospital.db','w')
+con = connect('hospital.db')
+cur = con.cursor()
+cur.execute('CREATE TABLE HOSP (hospital_ID int, hospital_name text, bed_number int)')
+con.commit()
+cur.execute('INSERT INTO HOSP VALUES(1,"Mayo Clinic",200)')
+cur.execute('INSERT INTO HOSP VALUES(2,"Cleveland Clinic",400)')
+cur.execute('INSERT INTO HOSP VALUES(3,"Johns Hopkins",1000)')
+cur.execute('INSERT INTO HOSP VALUES(4,"UCLA Medical Centre",1500)')
+con.commit()
+cur.execute('SELECT * FROM HOSP')
+l = cur.fetchall()
+for i in l:
+ print(i[0],i[1],i[2])
+cur.execute('UPDATE HOSP SET bed_number = 100 WHERE hospital_ID = 1')
+cur.execute('DELETE FROM HOSP WHERE hospital_ID = 3')
+con.commit()
+print('after changes')
+cur.execute('SELECT * FROM HOSP')
+l = cur.fetchall()
+for i in l:
+ print(i[0],i[1],i[2])
